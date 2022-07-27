@@ -28,3 +28,13 @@ RUN yum -y install httpd
 CMD ["apachectl","-DFOREGROUND"]
 
 docker info
+
+Buenas Practicas:
+    Efimeros
+    Un servicio por contenedor
+    Buil context -> .dockerignore
+    Pocas capas
+    Multi linea \
+    Varios argumentos en una sola capa
+    No instalar paquetes innecesarios
+    Labels
