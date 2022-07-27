@@ -1,6 +1,8 @@
 docker ps -a
+docker ps --no-trunc
 docker info
 docker images
+du -shc *: Size Folder
 
 Download Images - DockerHub
     docker pull mongo:latest
@@ -12,7 +14,25 @@ Download Images - DockerHub
     docker run -d -p 6379:6379 --name some-redis redis
 
 Build Images
-    docker build --tag apache-centos:primera .
+    docker rmi IMAGE_ID -f
+    docker build --tag apache-centos:latest .
     docker history -H apache-centos:latest
     docker rm -fv NAMES
-    docker run -d --name apache -p 80:80 apache-centos:apache-cmd
+    docker run -d --name apache -p 80:80 apache-centos:latest
+    docker logs NAMESCONTAINER
+        Summary:
+            docker build -t apache .
+            docker run -d -p 80:80 apache
+
+DockerFile
+    FROM
+    RUN
+    COPY/ADD
+    ENV
+    WORKDIR
+    EXPOSE
+    LABEL
+    USER
+    VOLUME
+    CMD 
+    .dockerignore
