@@ -1,0 +1,12 @@
+Containers:
+    Son una instancia de ejecucion de una imagen
+    Son temporales
+    Capa de RW
+    Podemos crear varios partiendo de una misma imagen
+
+Commands:
+    docker pull jenkins:2.60.3
+    docker ps
+    docker run --help
+    docker run -d -p 8090:8080 jenkins:2.60.3
+    docker rm -f NAMES  ---> Eliminar Contenedor

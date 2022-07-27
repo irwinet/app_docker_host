@@ -1,51 +1,8 @@
-docker ps -a
-docker ps --no-trunc
-docker info
-docker images
-du -shc *: Size Folder
+Generales:
+    docker ps -a
+    docker ps --no-trunc
+    docker info
+    docker images
 
-Download Images - DockerHub
-    docker pull mongo:latest
-    docker images | grep mongo
-
-    docker pull mysql:latest
-
-    docker pull redis:latest
-    docker run -d -p 6379:6379 --name some-redis redis
-
-Build Images    
-    docker build --tag apache-centos:latest .
-    docker history -H apache-centos:latest
-    docker rm -fv NAMES
-    docker run -d --name apache -p 80:80 apache-centos:latest
-    docker logs NAMESCONTAINER
-        Summary:
-            docker build -t apache .
-            docker run -d -p 80:80 apache
-
-DockerFile
-    FROM
-    RUN
-    COPY/ADD
-    ENV
-    WORKDIR
-    EXPOSE
-    LABEL
-    USER
-    VOLUME
-    CMD 
-    .dockerignore
-
-Generar un Certificado:
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout docker.key -out docker.crt
-    docker run -d -p 443:443 apache:php
-
-Eliminar Imagenes:
-    docker rmi REPOSIROY:TAG / IMAGE_ID    
-    docker images -f dangling=true -q | xargs docker rmi    
-
-Cambiar el nombre del Dockerfile
-    docker build -t test -f my-dockerfile .
-
-Error 502 Getaway
-    --enablerepo=ius-archive && yum clean all
+Size Folder
+    du -shc *
