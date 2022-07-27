@@ -9,4 +9,12 @@ Commands:
     docker ps
     docker run --help
     docker run -d -p 8090:8080 jenkins:2.60.3
-    docker rm -f NAMES  ---> Eliminar Contenedor
+    docker rm -f NAMES                  ---> Eliminar Contenedor
+    docker rename cool_germain jenkins  ---> Renombrar Contenedor
+    docker stop CONTAINER_ID            ---> Detener Contenedor
+    docker start NAMES                  ---> Iniciar Contenedor
+    docker restart jenkins              ---> Reiniciar Contenedor
+
+Ingresar al Contenedor
+    docker exec -ti jenkins bash
+    docker exec -u root -ti jenkins bash        ---> Como usuario root
