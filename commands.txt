@@ -1,0 +1,18 @@
+docker ps -a
+docker info
+docker images
+
+Download Images - DockerHub
+    docker pull mongo:latest
+    docker images | grep mongo
+
+    docker pull mysql:latest
+
+    docker pull redis:latest
+    docker run -d -p 6379:6379 --name some-redis redis
+
+Build Images
+    docker build --tag apache-centos:primera .
+    docker history -H apache-centos:latest
+    docker rm -fv NAMES
+    docker run -d --name apache -p 80:80 apache-centos:apache-cmd

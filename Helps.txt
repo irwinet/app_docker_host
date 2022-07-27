@@ -1,0 +1,30 @@
+Docker: Es una herramienta que permite desplegar aplicaciones en contenedores, de forma rapida y portable.
+
+webserver apache
+docker run -d -p 80:80 --name web httpd
+docker rm -fv web
+docker run -d -p 81:80 --name web2 nginx
+
+Arquitectura:
+Docker Host
+    Docker Daemon - Server
+    Rest API
+    Docker CLI - Client
+        Contenedor (RW)
+            Capa 4 - Ejecución
+
+            Imágenes (Dockerfile) (RO)
+                Capa 1 - FROM
+                Capa 2 - RUN
+                Capa 3 - CMD
+                
+            Volúmenes
+            
+            Redes
+
+Dockerfile
+FROM centos:7
+RUN yum -y install httpd
+CMD ["apachectl","-DFOREGROUND"]
+
+docker info
