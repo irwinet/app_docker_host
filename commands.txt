@@ -13,8 +13,7 @@ Download Images - DockerHub
     docker pull redis:latest
     docker run -d -p 6379:6379 --name some-redis redis
 
-Build Images
-    docker rmi IMAGE_ID -f
+Build Images    
     docker build --tag apache-centos:latest .
     docker history -H apache-centos:latest
     docker rm -fv NAMES
@@ -40,3 +39,13 @@ DockerFile
 Generar un Certificado:
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout docker.key -out docker.crt
     docker run -d -p 443:443 apache:php
+
+Eliminar Imagenes:
+    docker rmi REPOSIROY:TAG / IMAGE_ID    
+    docker images -f dangling=true -q | xargs docker rmi    
+
+Cambiar el nombre del Dockerfile
+    docker build -t test -f my-dockerfile .
+
+Error 502 Getaway
+    --enablerepo=ius-archive && yum clean all
