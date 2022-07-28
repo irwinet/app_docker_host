@@ -25,3 +25,17 @@ Eliminar todos los Contenedores
     docker run -dti -e "prueba1=4321" --name env centos:env     ---> Agregar Variable
     docker exec -ti CONTAINER_ID bash                           ---> Acceder al terminal
     env                                                         ---> Ver Variables Definidas
+
+Mysql
+    docker pull mysql
+    docker run -d -p 3306:3306 --name my-db1 -e "MYSQL_ROOT_PASSWORD=123456789" mysql:latest
+    docker logs -f my-db1
+    docker inspect my-db1
+    IP = 172.17.0.3
+    mysql -u root -h 172.17.0.3 -p123456789
+    yum install mysql -y
+    mysql -u root --port 3306 -h 172.17.0.3 -p123456789 // mysql -u root --port 3306 -h localhost -p123456789
+
+    docker run -d -p 3333:3306 --name my-db2 -e "MYSQL_ROOT_PASSWORD=123456789" -e "MYSQL_DATABASE=docker-db" -e "MYSQL_USER=docker-user" -e "MYSQL_PASSWORD=12345" mysql:latest
+    mysql -u root -p123456789 -h 127.0.0.1 --port 3333  ---> User Root
+    mysql -u docker-user -p12345 -h 127.0.0.1 --port 3333  ---> User Docker-DB
