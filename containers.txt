@@ -18,3 +18,10 @@ Commands:
 Ingresar al Contenedor
     docker exec -ti jenkins bash
     docker exec -u root -ti jenkins bash        ---> Como usuario root
+
+Eliminar todos los Contenedores
+    docker ps -q | xargs docker rm -f
+    docker run -dti --name env centos:env                       ---> Ejecutar Contenedor
+    docker run -dti -e "prueba1=4321" --name env centos:env     ---> Agregar Variable
+    docker exec -ti CONTAINER_ID bash                           ---> Acceder al terminal
+    env                                                         ---> Ver Variables Definidas
