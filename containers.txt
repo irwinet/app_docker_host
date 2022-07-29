@@ -39,3 +39,8 @@ Mysql
     docker run -d -p 3333:3306 --name my-db2 -e "MYSQL_ROOT_PASSWORD=123456789" -e "MYSQL_DATABASE=docker-db" -e "MYSQL_USER=docker-user" -e "MYSQL_PASSWORD=12345" mysql:latest
     mysql -u root -p123456789 -h 127.0.0.1 --port 3333  ---> User Root
     mysql -u docker-user -p12345 -h 127.0.0.1 --port 3333  ---> User Docker-DB
+
+Mongo
+    docker pull mongo
+    docker run -d --name my-mongo -p 27017:27017 mongo:latest
+    docker stats my-mongo
