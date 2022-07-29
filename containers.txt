@@ -44,3 +44,28 @@ Mongo
     docker pull mongo
     docker run -d --name my-mongo -p 27017:27017 mongo:latest
     docker stats my-mongo
+
+Apache 
+    docker pull httpd
+    docker run -d -p 9999:80 --name apache apache:latest
+
+Ngnix
+    docker pull nginx
+    docker run -d -p 8888:80 --name nginx nginx:latest
+
+Tomcat
+    docker pull tomcat
+    docker run -d -p 7070:8080 --name my-tomcat tomcat:latest
+
+PostgreSQL
+    docker pull postgres
+    docker run -d --name postgre -e "POSTGRES_PASSWORD=123456789" -e "POSTGRES_USER=docker-user" -e "POSTGRES_DB=docker-db" -p 5432:5432 postgres:latest
+    docker exec -ti postgre bash
+    psql -d docker-db -U docker-user
+    \l
+
+Jenkins
+    docker pull jenkins
+    docker run -d -p 7070:8080 --name jenkins jenkins:2.60.3
+    docker exec -ti jenkins bash
+    cat /var/jenkins_home/secrets/initialAdminPassword
