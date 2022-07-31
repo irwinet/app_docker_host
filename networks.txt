@@ -1,0 +1,76 @@
+Redes:
+    Crear/Eliminar
+    Tipos:  
+        Bridge
+        Host
+        None
+        Overlay
+    Conectar Contenedores
+
+** La red bridge
+
+¿Cuál es la red por defecto? (No se puede hacer PIN por NAMES)    
+    docker run -d -p 9999:80 --name apache apache:latest
+    docker run -d -p 9090:80 --name apache2 apache:latest
+    
+    ip a | grep docker
+    docker inspect nginx
+    docker network ls
+    docker network inspect bridge                   ---> Red por Defecto
+    docker inspect nginx | grep bridge -C 5         ---> Verificar Red Bridge
+    docker exec apache bash -c "ping 172.17.0.2"    ---> Ping a la red Apache2
+
+Crear una red definida por el usuario
+    docker network create test-network              ---> Valores por defecto
+    docker network create -d bridge --subnet 172.124.10.0/24 --gateway 172.124.10.1 docker-test-network
+    
+Inspeccionar redes
+    docker inspect docker-test-network              ---> Ver Detalles
+
+Agregar contenedores a una red distinta a la por defecto
+    docker run --network docker-test-network -d -p 9999:80 --name apache apache:latest
+    docker inspect apache
+
+Conectar contenedores en la misma red
+    docker run --network docker-test-network -d -p 9999:80 --name apache1 apache:latest
+    docker run --network docker-test-network -d -p 8888:80 --name apache2 apache:latest
+    docker inspect apache1  ---> 172.124.10.2
+    docker inspect apache2  ---> 172.124.10.3
+    docker exec apache1 bash -c "ping 172.124.10.3"
+    docker exec apache2 bash -c "ping 172.124.10.2"
+    docker exec apache1 bash -c "ping apache2"
+    docker run --network test-network -d -p 7777:80 --name apache3 apache:latest    ---> Red Distinta
+
+Conectar contenedores en distintas redes
+    docker inspect docker-test-network
+    docker inspect test-network
+    docker network connect docker-test-network apache3      ---> Agregar la red [docker-test-network]
+    docker exec apache1 bash -c "ping apache3"
+    docker network disconnect docker-test-network apache3   ---> Quitar la red [docker-test-network]
+
+Eliminar redes
+    docker network rm docker-test-network (No se puede eliminar si hay contenedores ejecutandose)
+
+Asignar IP a un contenedor
+    docker run --network docker-test-network -d -p 9999:80 --name apache1 apache:latest
+    docker inspect apache1  ---> "Ip" : "172.124.10.2" |  "Subnet": "172.124.10.0/24"
+    docker run --network docker-test-network --ip 172.124.10.50 -d -p 8888:80 --name apache2 apache:latest
+
+** La red de Host (Un Contenedor con la misma red que mi maquina)
+docker run --network host -d --name apache1 apache:latest
+docker exec -ti apache1 bash
+yum -y install net-tools            ---> ifconfig
+
+** La red None (Un Contenedor sin Red)
+docker run --network none -d --name apache1 apache:latest
+
+Notas:
+IP de nuestro Docker Host es 192.168.100.2:
+
+    docker run -d -p 8080:80 nginx
+        localhost:8080
+        127.0.0.1:8080
+        192.168.100.2:8080
+
+    docker run -d -p 127.0.0.1:8081:80 nginx
+        localhost:8080
