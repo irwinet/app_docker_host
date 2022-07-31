@@ -93,3 +93,35 @@ Apache: Copiar archivos a un contenedor
     ls -l
     docker cp index.html apache:/var/www/html/index.html
     docker cp apache:/var/log/httpd/error_log .
+
+Convertir una imagen en contenedor
+    docker build -t centos:img .
+    docker run -dti --name centos centos:img
+    docker exec -ti centos bash
+    touch file1.txt
+    touch volumen/file1.txt
+    
+    docker commit centos centos:resultante
+    docker run -dti --name centos centos:resultante
+
+Sobreescribe el CMD de una imagen sin un Dockerfile!
+    docker run -dti centos:img
+    docker run -dti centos:img echo hola mundo
+    docker run -d -p 8080:8080 centos:img python -m SimpleHTTPServer 8080
+
+Aprende a destruir contenedores automáticamente
+    docker rm -fv relaxed_grothendieck
+    docker run --rm -ti --name centos centos:img bash           ---> Contenedor Temporal
+
+Cambiar el Document Root de Docker
+    docker info | grep -i root
+        Docker Root Dir: /var/lib/docker
+    vi /lib/systemd/system/docker.service
+        ExecStart=/usr/bin/dockerd  --data-root /opt/docker
+    systemctl daemon-reload
+    systemctl restart docker
+    sudo systemctl stop docker
+    cd /var/lib
+    mv docker/ opt/
+    systemctl daemon-reload
+    systemctl restart docker
