@@ -1,0 +1,19 @@
+Volumens:
+    Los volumenes permiten almacenar data persistente del contenedor
+    Tipos:
+        Host
+        Anonymus
+        Named Volumes
+
+MySql: ¿Por qué son importantes los volúmenes?
+    docker run -d -p 3306:3306 --name my-db -e "MYSQL_ROOT_PASSWORD=123456789" -e "MYSQL_DATABASE=docker-db" -e "MYSQL_USER=docker-user" -e "MYSQL_PASSWORD=12345" mysql:latest
+    docker logs -f my-db
+    mysql -u root -h 127.0.0.1 -p
+    mysqldump -u root -h 127.0.0.1 -p123456789 sys > dump.sql       ---> BK
+    mysql -u root -h 127.0.0.1 -p docker-db < dump.sql
+    mysql -u root -h 127.0.0.1 -p docker-db
+
+Volumen Host MySql:
+    docker run -d --name db -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=123456789" -v "D:\Clases Udemy\Docker\app_docker_volumes\mysql_volume\mysql":/var/lib/mysql mysql:latest
+    mysql -u root -h 127.0.0.1 -p123456789
+    docker rm -fv db
