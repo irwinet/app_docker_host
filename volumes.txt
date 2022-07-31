@@ -13,7 +13,43 @@ MySql: ¿Por qué son importantes los volúmenes?
     mysql -u root -h 127.0.0.1 -p docker-db < dump.sql
     mysql -u root -h 127.0.0.1 -p docker-db
 
+Volumen Docker File:    
+    docker volume ls
+    docker build -t centos:vol .
+    docker run -dti --name test centos:vol
+    docker exec -ti test bash
+    docker rm -f test                   ---> Eliminar Sin Volumen
+    docker volume rm ebba6daf6695e6ce7af7cda899d7941a249d03e9c5e5a75ab2599401e43aeecf
+
 Volumen Host MySql:
     docker run -d --name db -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=123456789" -v "D:\Clases Udemy\Docker\app_docker_volumes\mysql_volume\mysql":/var/lib/mysql mysql:latest
     mysql -u root -h 127.0.0.1 -p123456789
-    docker rm -fv db
+    docker rm -fv db                    ---> Eliminar Con Volumen
+
+Volumen Anonimo MySql:
+    docker run -d --name db -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=123456789" -v /var/lib/mysql mysql:latest
+    docker info | grep -i root
+    docker inspect mysql | grep 795 === "/var/lib/docker/volumes/795568a50228a4812918e24c1f14b43e7d1eb21214b373b4124fa5bbcb8e2529/_data"
+    docker rm -fv db                    ---> Eliminar Con Volumen
+
+Volumen Nombrados:
+    docker volume create mysql-data
+    docker run -d --name db -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=123456789" -v mysql-data:/var/lib/mysql mysql:latest
+    docker rm -fv mysql                 ---> Eliminar Sin Volumen
+
+Dangling volumes
+    docker run -d --name db -p 3306:3306 -e "MYSQL_ROOT_PASSWORD=123456789" -v /var/lib/mysql mysql:latest
+    docker rm -f db
+    docker volume ls -f dangling=true
+    docker volume ls -f dangling=true -q | xargs docker volume rm
+
+Persistiendo data en MongoDB:
+    docker run -d -p 27017:27017 -v "D:\Clases Udemy\Docker\app_docker_volumes\mongo_volume\mongo":/data/db mongo:latest
+    docker exec -ti reverent_carson bash
+    mongo command:  
+        use mydb
+        db.movie.insert({"name":"avengers"})
+        show dbs
+    docker rm -fv reverent_carson
+    docker run -d -p 27017:27017 --name mongo -v "D:\Clases Udemy\Docker\app_docker_volumes\mongo_volume\mongo":/data/db mongo:latest
+    docker exec -ti mongo bash
