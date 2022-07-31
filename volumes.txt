@@ -53,3 +53,21 @@ Persistiendo data en MongoDB:
     docker rm -fv reverent_carson
     docker run -d -p 27017:27017 --name mongo -v "D:\Clases Udemy\Docker\app_docker_volumes\mongo_volume\mongo":/data/db mongo:latest
     docker exec -ti mongo bash
+
+Persistiendo data en Jenkins
+    docker run -d --name jenkins -p 8080:8080 -v "D:\Clases Udemy\Docker\app_docker_volumes\jenkins_volume\jenkins":/var/jenkins_home jenkins:2.60.3
+    docker exec jenkins bash -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+    docker rm -fv jenkins
+
+Persistiendo logs en Nginx
+    docker run -d --name nginx nginx:latest
+    docker exec -ti nginx bash
+    cd var/log/nginx/
+    docker run -d --name nginx -p 80:80 -v "D:\Clases Udemy\Docker\app_docker_volumes\nginx_volume\nginx":/var/log/nginx/ nginx:latest
+    tail -f error.log               ---> Ver logs
+    docker rm -fv nginx
+
+Comparte volúmenes entre uno o más contenedores
+    docker build -t centos:shared .
+    docker run -v "D:\Clases Udemy\Docker\app_docker_volumes\volumen\common":/opt -d --name gen centos:shared
+    docker run -d --name nginx -v "D:\Clases Udemy\Docker\app_docker_volumes\volumen\common":/usr/share/nginx/html -p 80:80 nginx:latest
