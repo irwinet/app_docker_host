@@ -69,3 +69,27 @@ Jenkins
     docker run -d -p 7070:8080 --name jenkins jenkins:2.60.3
     docker exec -ti jenkins bash
     cat /var/jenkins_home/secrets/initialAdminPassword
+
+Centos:Administrar Usuarios
+    docker build -t centos:prueba .
+    docker run -d -ti --name prueba centos:prueba
+    docker exec -ti prueba bash
+    cat /etc/redhat-release             ---> Version SO
+    docker exec -u irwin -ti prueba bash
+
+Mongo: Limitar recursos
+    docker run -d --name mongo mongo:latest
+    docker stats mongo                  ---> Recursos
+    docker run --help | grep memo
+    docker run -d -m "500mb" --name mongo mongo:latest      ---> 500mb 5gb
+    grep "model name" /proc/cpuinfo | wc -l                 ---> CPUs
+    docker run -d -m "1gb" --cpuset-cpus 0-1 --name mongo mongo:latest  ---> Set CPUs
+
+Apache: Copiar archivos a un contenedor
+    docker run -d --name apache -p 80:80 apache:latest
+    docker cp index.html apache:/tmp            ---> Copiar Archivos
+    docker exec -ti apache bash
+    cd /tmp/
+    ls -l
+    docker cp index.html apache:/var/www/html/index.html
+    docker cp apache:/var/log/httpd/error_log .
