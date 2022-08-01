@@ -1,0 +1,107 @@
+Docker Compose:
+    Aplicaciones multicontenedor
+        Contenedores
+        Imagenes
+        Volumenes
+        Redes, etc
+
+Help
+    docker-compose
+
+Partes Importantes:
+    version: 
+    services:
+    volumes: [Optional]
+    networks: [Optional]
+
+Primeros pasos en Compose:
+    docker-compose up -d
+    docker-compose down
+
+Variables de entorno en Compose
+    props: environment | env_file
+    docker exec -ti mysql bash
+    env
+
+Volúmenes en Compose
+    Ruta Windows: \\wsl$\docker-desktop-data\data\docker\volumes
+    Nombrado: docker-compose-nombrado.yml
+    Host: docker-compose.yml
+
+Redes en Compose (Solo para redes definidas PING por NAMES)
+    props: networks
+    docker inspect nginx
+    docker exec -ti httpd1 bash -c "ping httpd2"
+    docker exec -ti httpd1 bash -c "ping web2"
+
+Construye imágenes en Compose
+    props: image|build
+    docker compose build            ---> Crear la imagen
+
+Sobreescribe el CMD de un contenedor con Compose
+    docker run -dti centos:7
+    docker-compose -f docker-compose.yml up -d
+
+Limitar recursos en contenedores (Compose v2)
+    docker-compose -f docker-compose.yml up -d
+    docker stats nginx
+
+Politica de reinicio de contenedores
+    no (default)        : Nunca lo reinicies
+    on-failure          : Reinicar el contenedor cada vez que ocurre un error
+    unless-stopped      : Si se detiene manualmente no se reinicia
+    always              : Siempre se reinicia
+
+    docker run -dti centos:7
+    docker compose build            ---> Crear la imagen
+    docker-compose up -d
+    docker logs -f test
+    watch -d docker ps              ---> Comando para estar al tanto de los contenedores
+    docker stop test
+    docker run -dti --restart unless-stopped redis
+
+Personaliza el nombre de tu proyecto en Compose
+    docker-compose -p webtest up -d        
+
+Instalando WordPress + MySQL
+    docker-compose up -d
+    docker-compose logs -f
+
+Instalando Drupal + PostgreSQL
+    docker-compose up -d
+
+Instalando PrestaShop + MySQL
+    docker-compose up -d
+    docker-compose logs -f
+
+Instalando Joomla + MySQL
+    docker-compose up -d
+    docker-compose down
+
+Instalando Reaction Ecommerce - NodeJS + MongoDB
+    docker-compose up -d
+    docker-compose logs -f
+    docker-compose down
+    user: admin@localhost
+    password: r3@cti0n
+
+Instalando Guacamole (Herramienta que nos permite conectarnos a escritorios remotos)
+    docker-compose up -d
+    docker-compose down
+    user: guacadmin
+    password: guacadmin
+
+    docker build -t test .
+    docker run -d --name ssh --network guacamole_net test
+    docker inspect ssh
+    docker exec -ti ssh bash
+        passwd guacamole
+        12345        
+
+    ssh guacamole@IP 
+
+Instala Zabbix con Compose (Herramienta para monitorear servidores)
+    docker-compose up -d    
+    user: admin
+    password: zabbix    
+
