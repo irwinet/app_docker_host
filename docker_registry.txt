@@ -1,0 +1,22 @@
+Docker Registry:
+    Un servicio para subir y bajar imagenes
+
+Crea tu propio Docker Registry
+    docker run -d -p 5000:5000 --name registry -v "D:\Clases Udemy\Docker\app_docker_registry\data":/var/lib/registry registry:2
+
+Sube tus imágenes!
+    docker pull hello-world
+    docker tag hello-world:latest localhost:5000/hello-world    ---> Una imagen tageada
+    docker push localhost:5000/hello-world                  ---> Subir la imagen al registry
+    docker rmi hello-world localhost:5000/hello-world
+    docker pull localhost:5000/hello-world                  ---> Bajar la imagen del registry
+
+Comparte las imágenes en tu red
+    docker tag hello-world:latest 192.168.0.12:5000/hello-world
+    docker push 192.168.0.12:5000/hello-world ----> ERROR
+    vi /lib/systemd/system/docker.service
+        ExecStart=/usr/bin/dockerd --insecure-registry 192.168.0.12:5000
+    sudo systemctl daemon-reload
+    docker stop registry
+    sudo systemctl restart docker
+    docker push 192.168.0.12:5000/hello-world ----> SUCCESS
